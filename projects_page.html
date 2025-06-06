@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Saad Nahid Portfolio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #000000;
+            --accent: #00ff88;
+            --accent-2: #ff0066;
+            --accent-3: #3366ff;
+            --white: #ffffff;
+            --gray-light: #f8f9fa;
+            --gray: #6c757d;
+            --gray-dark: #212529;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-brand: linear-gradient(135deg, #00ff88 0%, #00ccff 50%, #ff0066 100%);
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .navbar.hidden {
+            transform: translateY(-100%);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-brand);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .back-btn {
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section for Projects Page */
+        .projects-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            margin-top: 100px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="%23000000" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 1000px;
+            z-index: 2;
+            padding: 0 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 0.9;
+            margin-bottom: 2rem;
+            background: var(--gradient-brand);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: var(--gray);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===========================================
+           PROJECTS GRID SECTION
+           =========================================== */
+        .projects-section {
+            padding: 8rem 2rem;
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Filter buttons for project categories */
+        .project-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        /* Projects grid container */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        /* Individual project card */
+        .project-card {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            background: var(--white);
+            height: 500px;
+        }
+
+        /* Hover effect for project cards */
+        .project-card:hover {
+            transform: translateY(-20px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 40px 80px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Project image */
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: all 0.6s ease;
+        }
+
+        /* Image scaling effect on hover */
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+        }
+
+        /* Overlay that appears on hover */
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.9) 0%, rgba(0, 204, 255, 0.9) 50%, rgba(255, 0, 102, 0.9) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            text-decoration: none;
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Show overlay on hover */
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        /* Play/view icon in overlay */
+        .project-play-icon {
+            width: 80px;
+            height: 80px;
+            border: 3px solid var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            transform: scale(0.8);
+        }
+
+        /* Icon scaling effect */
+        .project-card:hover .project-play-icon {
+            transform: scale(1);
+        }
+
+        /* Arrow icon inside play button */
+        .project-play-icon::after {
+            content: '→';
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        /* Project title in overlay */
+        .project-overlay-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        /* Project description in overlay */
+        .project-overlay-description {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            transition-delay: 0.1s;
+            line-height: 1.5;
+        }
+
+        /* Project category tag */
+        .project-category {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+            transition-delay: 0.2s;
+        }
+
+        /* Animate all text elements sliding up on hover */
+        .project-card:hover .project-overlay-title,
+        .project-card:hover .project-overlay-description,
+        .project-card:hover .project-category {
+            transform: translateY(0);
+        }
+
+        /* Project info section below the image */
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            padding: 2rem;
+            color: var(--white);
+            transform: translateY(100%);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        /* Show project info on hover */
+        .project-card:hover .project-info {
+            transform: translateY(0);
+        }
+
+        .project-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-info p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .projects-hero {
+                min-height: 50vh;
+                margin-top: 80px;
+            }
+            
+            .projects-section {
+                padding: 4rem 1rem;
+            }
+            
+            .project-card {
+                height: 400px;
+            }
+            
+            .project-overlay-title {
+                font-size: 1.5rem;
+            }
+            
+            .project-overlay-description {
+                font-size: 1rem;
+            }
+            
+            .project-play-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .project-play-icon::after {
+                font-size: 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+
+        /* Floating Shapes */
+        .floating-shapes {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            top: 20%;
+            left: 10%;
+            width: 100px;
+            height: 100px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            top: 60%;
+            right: 15%;
+            width: 150px;
+            height: 150px;
+            background: var(--accent-2);
+            border-radius: 30px;
+            animation-delay: 2s;
+        }
+
+        .shape-3 {
+            bottom: 30%;
+            left: 20%;
+            width: 80px;
+            height: 80px;
+            background: var(--accent-3);
+            border-radius: 50%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        /* Selection */
+        ::selection {
+            background: var(--accent);
+            color: var(--primary);
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor" id="cursor"></div>
+
+    <!-- Floating Shapes -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- UPDATE THIS LINK TO GO BACK TO YOUR MAIN PAGE -->
+            <a href="index.html" class="logo">SAAD NAHID</a>
+            <ul class="nav-links">
+                <li><a href="#web-design">Web Design</a></li>
+                <li><a href="#branding">Branding</a></li>
+                <li><a href="#ecommerce">E-commerce</a></li>
+                <li><a href="#mobile">Mobile Apps</a></li>
+            </ul>
+            <!-- UPDATE THIS LINK TO GO BACK TO YOUR MAIN PAGE -->
+            <a href="index.html" class="back-btn">← Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Projects Hero Section -->
+    <section class="projects-hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <p class="hero-subtitle">My Portfolio</p>
+            <h1 class="hero-title">FEATURED<br>PROJECTS</h1>
+            <p class="hero-description">A collection of my best work showcasing brand transformations, web development, and digital experiences that drive real results.</p>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects-section">
+        <div class="container">
+            <!-- Project Category Filters -->
+            <div class="project-filters">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="web-design">Web Design</button>
+                <button class="filter-btn" data-filter="branding">Branding</button>
+                <button class="filter-btn" data-filter="ecommerce">E-commerce</button>
+                <button class="filter-btn" data-filter="mobile">Mobile Apps</button>
+            </div>
+
+            <!-- ====================================================
+                 PROJECTS GRID - ADD YOUR PROJECTS HERE
+                 ==================================================== -->
+           <!-- ====================================================
+     PROJECTS GRID - ALL YOUR PROJECTS
+     ==================================================== -->
+<div class="projects-grid">
+    
+    <!-- PROJECT 1: Modern Business Website -->
+    <div class="project-card" data-category="web-design">
+        <img src="Modern Business Website.webp" 
+             alt="Modern Business Website" 
+             class="project-image">
+        
+        <a href="https://your-project-1-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Modern Business Website</h3>
+            <p class="project-overlay-description">A complete brand transformation with responsive design and custom animations that increased conversions by 200%.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Modern Business Website</h3>
+            <p>Complete redesign with modern UI/UX</p>
+            <div class="project-tags">
+                <span class="project-tag">WordPress</span>
+                <span class="project-tag">Custom Design</span>
+                <span class="project-tag">Responsive</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 2: Brand Identity Package -->
+    <div class="project-card" data-category="branding">
+        <img src="Brand Identity Package.webp" 
+             alt="Brand Identity Package" 
+             class="project-image">
+        
+        <a href="https://your-project-2-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Branding</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Brand Identity Package</h3>
+            <p class="project-overlay-description">Complete brand identity including logo, color palette, typography, and marketing materials for a tech startup.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Brand Identity Package</h3>
+            <p>Full branding solution for tech startup</p>
+            <div class="project-tags">
+                <span class="project-tag">Logo Design</span>
+                <span class="project-tag">Brand Guidelines</span>
+                <span class="project-tag">Print Design</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 3: E-commerce Platform -->
+    <div class="project-card" data-category="ecommerce">
+        <img src="E COMMERCE PLATFORM.webp" 
+             alt="E-commerce Platform" 
+             class="project-image">
+        
+        <a href="https://your-project-3-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">E-commerce</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">E-commerce Platform</h3>
+            <p class="project-overlay-description">Custom online store with payment integration, inventory management, and advanced analytics dashboard.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>E-commerce Platform</h3>
+            <p>Full-featured online store solution</p>
+            <div class="project-tags">
+                <span class="project-tag">Shopify</span>
+                <span class="project-tag">Payment Integration</span>
+                <span class="project-tag">Analytics</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 4: Mobile App Design -->
+    <div class="project-card" data-category="mobile">
+        <img src="mobile app interface.webp" 
+             alt="Mobile App Design" 
+             class="project-image">
+        
+        <a href="https://your-project-4-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Mobile App</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Mobile App Design</h3>
+            <p class="project-overlay-description">User-centered mobile app design with intuitive navigation and seamless user experience across iOS and Android.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Mobile App Design</h3>
+            <p>Cross-platform mobile application</p>
+            <div class="project-tags">
+                <span class="project-tag">UI/UX</span>
+                <span class="project-tag">iOS</span>
+                <span class="project-tag">Android</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 5: Restaurant Website -->
+    <div class="project-card" data-category="web-design">
+        <img src="Restaurant Website.webp" 
+             alt="Restaurant Website" 
+             class="project-image">
+        
+        <a href="https://your-project-5-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Restaurant Website</h3>
+            <p class="project-overlay-description">Modern restaurant website with online ordering system, table reservations, and dynamic menu management.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Restaurant Website</h3>
+            <p>Online ordering and reservation system</p>
+            <div class="project-tags">
+                <span class="project-tag">Online Ordering</span>
+                <span class="project-tag">Reservations</span>
+                <span class="project-tag">Custom CMS</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 6: Corporate Rebrand -->
+    <div class="project-card" data-category="branding">
+        <img src="Corporate Rebrand.webp" 
+             alt="Corporate Rebrand" 
+             class="project-image">
+        
+        <a href="https://your-project-6-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Branding</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Corporate Rebrand</h3>
+            <p class="project-overlay-description">Complete corporate rebranding project including logo redesign, brand guidelines, and marketing collateral.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Corporate Rebrand</h3>
+            <p>Complete brand transformation</p>
+            <div class="project-tags">
+                <span class="project-tag">Corporate</span>
+                <span class="project-tag">Rebrand</span>
+                <span class="project-tag">Marketing</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 7: Fitness Website Design -->
+    <div class="project-card" data-category="web-design">
+        <img src="fitness website design.webp" 
+             alt="Fitness Website Design" 
+             class="project-image">
+        
+        <a href="https://m-s-gdoxp.github.io/Californie-Gym-Website/" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Fitness Website Design</h3>
+            <p class="project-overlay-description">Modern gym website with workout programs, membership plans, trainer profiles, and online class booking system.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Fitness Website Design</h3>
+            <p>Complete gym website with booking system</p>
+            <div class="project-tags">
+                <span class="project-tag">Gym Management</span>
+                <span class="project-tag">Class Booking</span>
+                <span class="project-tag">Membership</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 8: Barbershop Website Interface -->
+    <div class="project-card" data-category="web-design">
+        <img src="barbershop website interface .webp" 
+             alt="Barbershop Website Interface" 
+             class="project-image">
+        
+        <a href="https://m-s-gdoxp.github.io/MEHDI-S-BARBERSHOP/" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Barbershop Website Interface</h3>
+            <p class="project-overlay-description">Professional barbershop website with online appointment booking, service menu, barber profiles, and grooming product showcase.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Barbershop Website Interface</h3>
+            <p>Professional grooming services with booking</p>
+            <div class="project-tags">
+                <span class="project-tag">Appointment Booking</span>
+                <span class="project-tag">Service Menu</span>
+                <span class="project-tag">Barber Profiles</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 9: Real Estate Website -->
+    <div class="project-card" data-category="web-design">
+        <img src="REAL ESTATE WEBSITE.webp" 
+             alt="Real Estate Website" 
+             class="project-image">
+        
+        <a href="https://your-real-estate-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Real Estate Website</h3>
+            <p class="project-overlay-description">Luxury real estate platform with property listings, virtual tours, advanced search filters, and agent management system.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Real Estate Website</h3>
+            <p>Property listings with virtual tours</p>
+            <div class="project-tags">
+                <span class="project-tag">Property Search</span>
+                <span class="project-tag">Virtual Tours</span>
+                <span class="project-tag">Agent Portal</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 10: Portfolio Website -->
+    <div class="project-card" data-category="web-design">
+        <img src="PORTFOLIO WEBSITE.webp" 
+             alt="Portfolio Website" 
+             class="project-image">
+        
+        <a href="https://your-portfolio-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Portfolio Website</h3>
+            <p class="project-overlay-description">Creative portfolio showcase for photographers and artists with image galleries, client testimonials, and booking system.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Portfolio Website</h3>
+            <p>Creative showcase with booking system</p>
+            <div class="project-tags">
+                <span class="project-tag">Image Gallery</span>
+                <span class="project-tag">Creative Design</span>
+                <span class="project-tag">Client Portal</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 11: Medical/Healthcare Website -->
+    <div class="project-card" data-category="web-design">
+        <img src="healthcare website design.webp" 
+             alt="Healthcare Website" 
+             class="project-image">
+        
+        <a href="https://your-healthcare-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Healthcare Website</h3>
+            <p class="project-overlay-description">Professional medical website with appointment booking, doctor profiles, patient portal, and telemedicine integration.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Healthcare Website</h3>
+            <p>Medical services with patient portal</p>
+            <div class="project-tags">
+                <span class="project-tag">Appointment System</span>
+                <span class="project-tag">Patient Portal</span>
+                <span class="project-tag">Telemedicine</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 12: Education Website -->
+    <div class="project-card" data-category="web-design">
+        <img src="EDUCATION WEBSITE.webp" 
+             alt="Education Website" 
+             class="project-image">
+        
+        <a href="https://your-education-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Education Website</h3>
+            <p class="project-overlay-description">Modern e-learning platform with online courses, student dashboard, progress tracking, and interactive video lessons.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Education Website</h3>
+            <p>E-learning platform with course management</p>
+            <div class="project-tags">
+                <span class="project-tag">Online Courses</span>
+                <span class="project-tag">Student Portal</span>
+                <span class="project-tag">Progress Tracking</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROJECT 13: Nonprofit Website -->
+    <div class="project-card" data-category="web-design">
+        <img src="nonprofit organization website.webp" 
+             alt="Nonprofit Website" 
+             class="project-image">
+        
+        <a href="https://your-nonprofit-website.com" 
+           target="_blank" 
+           class="project-overlay">
+            <div class="project-category">Web Design</div>
+            <div class="project-play-icon"></div>
+            <h3 class="project-overlay-title">Nonprofit Website</h3>
+            <p class="project-overlay-description">Inspiring nonprofit organization website with donation system, volunteer management, impact stories, and community engagement tools.</p>
+        </a>
+
+        <div class="project-info">
+            <h3>Nonprofit Website</h3>
+            <p>Community-focused with donation system</p>
+            <div class="project-tags">
+                <span class="project-tag">Donation System</span>
+                <span class="project-tag">Volunteer Portal</span>
+                <span class="project-tag">Impact Stories</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+                <!-- ADD MORE PROJECTS HERE BY COPYING THE STRUCTURE ABOVE -->
+                <!-- Just duplicate any project card and update the content -->
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ====================================================
+         JAVASCRIPT FOR INTERACTIVE FEATURES
+         ==================================================== -->
+    <script>
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Navbar hide/show on scroll
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.classList.add('hidden');
+            } else {
+                navbar.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Project Filter Functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filterValue = button.getAttribute('data-filter');
+
+                projectCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'block';
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(30px)';
+                        
+                        // Animate cards back in
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 100);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(30px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Enhanced magnetic effect for project cards
+        const projectCards_magnetic = document.querySelectorAll('.project-card');
+        
+        projectCards_magnetic.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                // Apply 3D rotation based on mouse position
+                card.style.transform = `
+                    translateY(-20px) 
+                    rotateX(${deltaY * 8}deg) 
+                    rotateY(${deltaX * 8}deg)
+                    scale(1.02)
+                `;
+            });
+
+            // Reset transform when mouse leaves
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0) scale(1)';
+            });
+
+            // Add click animation
+            card.addEventListener('click', () => {
+                card.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    card.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe project cards for animation
+        projectCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            card.style.transition = `all 0.8s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+
+        // Parallax effect for floating shapes
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                const speed = 0.5 + (index * 0.1);
+                shape.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add stagger animation on page load
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // Enhanced cursor interaction
+        const links = document.querySelectorAll('a, button, .project-card');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2)';
+                cursor.style.backgroundColor = 'var(--accent-2)';
+            });
+            
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.backgroundColor = 'var(--accent)';
+            });
+        });
+    </script>
+</body>
+</html>
